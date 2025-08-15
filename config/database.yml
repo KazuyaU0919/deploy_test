@@ -18,9 +18,18 @@ test:
   password: <%= ENV.fetch("DB_PASSWORD", "password") %>
 
 production:
-  primary:
+  primary: &prod
     <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
+    url: <%= ENV["DATABASE_URL"] %>
+
   cable:
-    <<: *default
+    <<: *prod
+    url: <%= ENV["DATABASE_URL"] %>
+
+  queue:
+    <<: *prod
+    url: <%= ENV["DATABASE_URL"] %>
+
+  cache:
+    <<: *prod
     url: <%= ENV["DATABASE_URL"] %>
